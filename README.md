@@ -21,7 +21,7 @@ I built it to show off all my gear — mouse, keyboard, monitor, headset, PC par
 ## Wanna see it live?
 
 Check it out here :  
-shttps://ichswags.github.io/ichswag-setup/
+(https://ichswags.github.io/ichswag-setup/)
 
 ---
 
