@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IchSwag's Setup</title>
+  <style>
+    :root {
+      --bg-color: #1f1f23;
+      --card-color: #2c2c34;
+      --text-color: #ffffff;
+      --accent-color: #4f91ea;
+      --button-text: #ffffff;
+      --ytb-color: #e1306c;
+    }
+
+    body.light {
+      --bg-color: #f9f9f9;
+      --card-color: #ffffff;
+      --text-color: #111111;
+      --accent-color: #3b82f6;
+      --button-text: #ffffff;
+      --ytb-color: #d82b5e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+      overflow-x: hidden;
+      min-height: 100vh;
+      padding-top: 72px; /* push content below top bar */
+      padding-bottom: 56px; /* reserve space for bottom bar */
+    }
+
+    /* Top fixed bar */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      background: rgba(44, 44, 52, 0.8);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 0 20px;
+      z-index: 9999;
+      user-select: none;
+    }
+
+    /* Social icons container */
+    .social-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-weight: bold;
+      font-size: 1em;
+      color: var(--ytb-color);
+    }
+
+    .social-links a {
+      color: var(--ytb-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.3s;
+    }
+
+    .social-links a:hover {
+      color: #a71d47;
+      text-decoration: underline;
+    }
+
+    .social-links img {
+      width: 24px;
+      height: 24px;
+      display: inline-block;
+    }
+
+    /* Title smaller, next to socials */
+    header h1 {
+      font-size: 1.6em;
+      margin-left: 20px;
+      white-space: nowrap;
+    }
+
+    /* Theme toggle */
+    .theme-toggle {
+      position: absolute;
+      top: 22px;
+      right: 20px;
+      cursor: pointer;
+      width: 28px;
+      height: 28px;
+      fill: var(--text-color);
+      transition: fill 0.3s ease;
+      z-index: 10000;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px 40px;
+      align-items: start;
+    }
+
+    .item {
+      background: var(--card-color);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInUp 0.7s ease forwards;
+      opacity: 0;
+    }
+
+    .item:hover {
+      transform: translateY(-6px) scale(1.015);
+      box-shadow: 0 0 25px var(--accent-color), 0 0 10px var(--accent-color);
+    }
+
+    .item img {
+      height: 180px;
+      max-width: 100%;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      object-fit: contain;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      transition: transform 0.4s ease;
+    }
+
+    .item:hover img {
+      transform: scale(1.05);
+    }
+
+    .item h2 {
+      font-size: 1.3em;
+      margin-bottom: 8px;
+    }
+
+    .item p {
+      margin: 6px 0 12px;
+    }
+
+    .buy-button {
+      background: var(--accent-color);
+      color: var(--button-text);
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .buy-button:hover {
+      background: #1f4bbd;
+      transform: scale(1.05);
+    }
+
+    /* Bottom bar - initially hidden */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: rgba(44, 44, 52, 0.8);
+      backdrop-filter: blur(8px);
+      text-align: center;
+      line-height: 56px;
+      font-size: 0.9em;
+      color: var(--text-color);
+      z-index: 9999;
+      font-weight: bold;
+      user-select: none;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    footer.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInDown {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.2em;
+        margin-left: 12px;
+      }
+
+      main {
+        grid-template-columns: 1fr;
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="social-links" aria-label="Social media links">
+      <a href="https://www.tiktok.com/@ichswag" target="_blank" aria-label="TikTok">
+        <img src="C:\Users\IchSw\Downloads\all\images\tik.png" alt="TikTok" />
+        TikTok
+      </a>
+      <a href="https://www.youtube.com/@02IchSwag" target="_blank" aria-label="YouTube">
+        <img src="C:\Users\IchSw\Downloads\all\images\ytb.png" alt="YouTube" />
+        YouTube
+      </a>
+      <a href="https://discord.gg/randomlink" target="_blank" aria-label="Discord">
+        <img src="C:\Users\IchSw\Downloads\all\images\dscd.png" alt="Discord" />
+        Discord
+      </a>
+    </nav>
+    <h1>IchSwag's Setup</h1>
+
+    <svg class="theme-toggle" onclick="toggleTheme()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="Toggle theme" role="button" tabindex="0">
+      <g id="icon-sun">
+        <path d="M12 4.5V2m0 20v-2.5M4.5 12H2m20 0h-2.5M6.34 6.34L4.93 4.93m14.14 14.14-1.41-1.41M6.34 17.66l-1.41 1.41m14.14-14.14-1.41 1.41M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8z" fill="currentColor"/>
+      </g>
+      <g id="icon-moon" style="display: none;">
+        <path d="M21 12.79A9 9 0 0 1 11.21 3a7 7 0 1 0 9.79 9.79z" fill="currentColor"/>
+      </g>
+    </svg>
+  </header>
+
+  <main>
+    <div class="item"><h2>Mouse</h2><img src="images/vxe-r1.png" alt="Mouse" /><p>VXE R1 Pro</p><a class="buy-button" href="https://maxesport.gg/fr/p/vxe-r1-pro-noir/" target="_blank">Buy Me</a></div>
+    <div class="item"><h2>Keyboard</h2><img src="images/mad.png" alt="Keyboard" /><p>MAD 60HE Black</p><a class="buy-button" href="https://madlionskeyboard.com/fr/produit/mad60he/" target="_blank">Buy Me</a></div>
+    <div class="item"><h2>Monitor</h2><img src="images/asrr.png" alt="Monitor" /><p>Predator 165Hz</p><a class="buy-button" href="https://www.amazon.fr/dp/B08DKZYFYY" target="_blank">Buy Me</a></div>
+    <div class="item"><h2>Headset</h2><img src="images/kraken.png" alt="Headset" /><p>Razer Kraken X</p><a class="buy-button" href="https://www.amazon.fr/dp/B07RMC5BRL" target="_blank">Buy Me</a></div>
+    <div class="item"><h2>Prebuilt PC</h2><img src="images/legion_t5.png" alt="Legion T5" /><p><strong>Legion T5 26IOB6</strong><br>Intel® Core™ i5-11400F<br>16 Go RAM<br>512 Go SSD<br>Noir</p><a class="buy-button" href="https://www.fnac.com/PC-Gaming-Lenovo-Legion-T5-26IOB6-Intel-Core-i5-11400F-16-Go-RAM-512-Go-SSD-Noir/a18431209/w-4" target="_blank">Buy Prebuilt</a></div>
+    <div class="item"><h2>CPU</h2><img src="images/i5.png" alt="CPU" /><p>Intel® Core™ i5-11400F</p><a class="buy-button" href="https://www.amazon.com/Intel-i5-11400F-Desktop-Processor-LGA1200/dp/B08X6SZ184" target="_blank">Buy CPU</a></div>
+    <div class="item"><h2>RAM</h2><img src="images/vg.png" alt="RAM" /><p>16 Go RAM (DDR4)</p><a class="buy-button" href="https://www.amazon.fr/Corsair-Vengeance-PC4-25600-3200MHz/dp/B0143UM4TC" target="_blank">Buy RAM</a></div>
+    <div class="item"><h2>Storage</h2><img src="images/cr.png" alt="SSD" /><p>512 Go SSD</p><a class="buy-button" href="https://www.amazon.fr/Crucial-Plus-500Go-CT500P3PSSD8-Jusqu%C3%A0/dp/B0B25NTRGD" target="_blank">Buy SSD</a></div>
+    <div class="item"><h2>Graphics Card</h2><img src="images/rtx.png" alt="RTX 3060" /><p>NVIDIA GeForce RTX 3060</p><a class="buy-button" href="https://www.amazon.fr/dp/B08WHJFYM8" target="_blank">Buy GPU</a></div>
+    <div class="item"><h2>Case Color</h2><p>Noir (Black)</p></div>
+  </main>
+
+  <footer id="footer-bar">
+    © 2025 IchSwag
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('light');
+      updateThemeIcon();
+    }
+
+    function updateThemeIcon() {
+      const isLight = document.body.classList.contains('light');
+      document.getElementById('icon-sun').style.display = isLight ? 'none' : 'block';
+      document.getElementById('icon-moon').style.display = isLight ? 'block' : 'none';
+    }
+
+    window.addEventListener('DOMContentLoaded', updateThemeIcon);
+
+    // Show footer only near bottom
+    function checkScroll() {
+      const footer = document.getElementById('footer-bar');
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const threshold = document.body.offsetHeight - 100; // 100px from bottom
+
+      if (scrollPosition >= threshold) {
+        footer.classList.add('visible');
+      } else {
+        footer.classList.remove('visible');
+      }
+    }
+
+    window.addEventListener('scroll', checkScroll);
+    window.addEventListener('resize', checkScroll);
+    window.addEventListener('load', checkScroll);
+  </script>
+</body>
+</html>
